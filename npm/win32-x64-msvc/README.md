@@ -1,3 +1,3 @@
-# `rsjv-win32-x64-msvc`
+# `docxtemplate-win32-x64-msvc`
 
-This is the **x86_64-pc-windows-msvc** binary for `rsjv`
+This is the **x86_64-pc-windows-msvc** binary for `docxtemplate`

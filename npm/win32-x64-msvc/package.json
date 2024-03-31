@@ -1,5 +1,5 @@
 {
-  "name": "rsjv-win32-x64-msvc",
+  "name": "docxtemplate-win32-x64-msvc",
   "version": "0.0.0",
   "os": [
     "win32"
@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "rsjv.win32-x64-msvc.node",
+  "main": "docxtemplate.win32-x64-msvc.node",
   "files": [
-    "rsjv.win32-x64-msvc.node"
+    "docxtemplate.win32-x64-msvc.node"
   ],
   "license": "MIT",
   "engines": {

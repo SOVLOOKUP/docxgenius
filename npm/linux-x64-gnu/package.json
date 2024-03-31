@@ -1,5 +1,5 @@
 {
-  "name": "rsjv-linux-x64-gnu",
+  "name": "docxtemplate-linux-x64-gnu",
   "version": "0.0.0",
   "os": [
     "linux"
@@ -7,9 +7,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "rsjv.linux-x64-gnu.node",
+  "main": "docxtemplate.linux-x64-gnu.node",
   "files": [
-    "rsjv.linux-x64-gnu.node"
+    "docxtemplate.linux-x64-gnu.node"
   ],
   "license": "MIT",
   "engines": {
