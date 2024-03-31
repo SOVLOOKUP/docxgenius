@@ -15,7 +15,6 @@ use serde::{Deserialize, Serialize};
 #[folder = "$CARGO_MANIFEST_DIR/target/debug/jassets"]
 struct Asset;
 
-// todo
 #[napi(object)]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MyData {
@@ -71,6 +70,47 @@ fn render1(
   let out = InvocationArg::try_from(out_path)?;
 
   jvm.invoke(&result, "writeToFile", &[out])?;
+
+  // todo
+  // https://github.com/Sayi/poi-tl/blob/master/poi-tl-cli/src/main/java/com/deepoove/poi/cli/CLI.java
+  //   ConfigureBuilder builder = Configure.builder();
+  // GsonHandler gsonHandler = new DefaultGsonHandler() {
+  //     @Override
+  //     protected RuntimeTypeAdapterFactory<RenderData> createRenderTypeAdapter(boolean readable) {
+  //         return super.createRenderTypeAdapter(readable).registerSubtype(MarkdownRenderData.class, "markdown")
+  //                 .registerSubtype(HighlightRenderData.class, "code")
+  //                 .registerSubtype(FileMarkdownRenderData.class, "markdown-file");
+  //     }
+
+  //     @Override
+  //     protected List<RuntimeTypeAdapterFactory<?>> createTypeAdapters(boolean readable) {
+  //         List<RuntimeTypeAdapterFactory<?>> typeAdapter = super.createTypeAdapters(readable);
+  //         typeAdapter.add(RuntimeTypeAdapterFactory.of(MarkdownRenderData.class, "type", readable)
+  //                 .registerSubtype(MarkdownRenderData.class, "markdown"));
+  //         typeAdapter.add(RuntimeTypeAdapterFactory.of(HighlightRenderData.class, "type", readable)
+  //                 .registerSubtype(HighlightRenderData.class, "code"));
+  //         typeAdapter.add(RuntimeTypeAdapterFactory.of(MarkdownRenderData.class, "type", readable)
+  //                 .registerSubtype(MarkdownRenderData.class, "markdown")
+  //                 .registerSubtype(FileMarkdownRenderData.class, "markdown-file"));
+  //         return typeAdapter;
+  //     }
+  // };
+  // GsonPreRenderDataCastor gsonPreRenderDataCastor = new GsonPreRenderDataCastor();
+  // gsonPreRenderDataCastor.setGsonHandler(gsonHandler);
+  // builder.addPreRenderDataCastor(gsonPreRenderDataCastor);
+  // builder.addPlugin(':', new CommentRenderPolicy())
+  //         .addPlugin(';', new AttachmentRenderPolicy())
+  //         .addPlugin('~', new HighlightRenderPolicy())
+  //         .addPlugin('-', new MarkdownRenderPolicy());
+  // builder.bind("toc", new TOCRenderPolicy());
+
+  // Configure configure = builder.build();
+  // try {
+  //     String jsonStr = ""; // 这里从 js 传过来即可
+
+  //     XWPFTemplate.compile(template, configure)
+  //             .render(gsonHandler.castJsonToType(jsonStr, TYPE))
+  //             .writeToFile(output);
 
   Ok(())
 }

@@ -56,4 +56,6 @@ fn main() {
     "pub fn deps(jvm: &Jvm) {".to_owned() + &out_deps + "\n}",
   )
   .unwrap();
+
+  println!("cargo:rerun-if-changed=pom.xml");
 }
