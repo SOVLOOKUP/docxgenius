@@ -26,6 +26,7 @@
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
     "universal": "napi universal",
-    "version": "napi version"
+    "version": "napi version",
+    "test": "node test/index.js"
   }
 }
