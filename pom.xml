@@ -27,7 +27,7 @@
     <dependency>
 	    <groupId>com.github.SOVLOOKUP</groupId>
 	    <artifactId>docx-template</artifactId>
-	    <version>1.0.6</version>
+	    <version>main-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
