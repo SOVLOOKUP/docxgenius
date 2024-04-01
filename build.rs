@@ -25,6 +25,7 @@ fn main() {
   let binding = ls_la_list
     .replace("[INFO]    ", "")
     .replace(":jar:", ":")
+    .replace(":runtime", "")
     .replace(":compile", "");
 
   let out: Vec<&str> = binding
@@ -39,13 +40,13 @@ fn main() {
 
   for d in out3 {
     let out4: Vec<&str> = d.split(" -- ").collect();
-    let out5 = out4[0];
+    let out5 = out4[0].trim();
     if out5.len() > 3 {
       out_deps += "
-    let dbx_artifact = MavenArtifact::from(\"";
+  let dbx_artifact = MavenArtifact::from(\"";
       out_deps += out5;
       out_deps += "\");
-    jvm.deploy_artifact(&dbx_artifact).unwrap();";
+  jvm.deploy_artifact(&dbx_artifact).unwrap();";
     }
   }
 
@@ -58,4 +59,5 @@ fn main() {
   .unwrap();
 
   println!("cargo:rerun-if-changed=pom.xml");
+  println!("cargo:rerun-if-changed=build.rs");
 }
