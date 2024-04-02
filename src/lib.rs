@@ -13,21 +13,44 @@ use rust_embed::RustEmbed;
 // Dependencies Jar
 #[derive(RustEmbed)]
 #[folder = "$CARGO_MANIFEST_DIR/target/debug/jassets"]
-struct Asset;
+struct Jassets;
+
+// Dependencies deps
+#[cfg(feature = "java_callback")]
+#[derive(RustEmbed)]
+#[folder = "$CARGO_MANIFEST_DIR/target/debug/deps"]
+struct Deps;
 
 // dump dependencies Jar
 fn dump(poitl_path: &PathBuf) {
   let jars_path = poitl_path.join("jassets");
   let _ = fs::create_dir_all(&jars_path);
 
-  for item in Asset::iter() {
+  for item in Jassets::iter() {
     let name = item.to_string();
-    let binding = Asset::get(&name).unwrap();
+    let binding = Jassets::get(&name).unwrap();
     let file = binding.data.as_ref();
 
     let jar_path = jars_path.join(name);
     if let Ok(false) = fs::try_exists(&jar_path) {
       let _ = fs::write(jar_path, file);
+    }
+  }
+
+  #[cfg(feature = "java_callback")]
+  {
+    let deps_path = poitl_path.join("deps");
+    let _ = fs::create_dir_all(&deps_path);
+
+    for item in Deps::iter() {
+      let name = item.to_string();
+      let binding = Deps::get(&name).unwrap();
+      let file = binding.data.as_ref();
+
+      let dep_path = deps_path.join(name);
+      if let Ok(false) = fs::try_exists(&dep_path) {
+        let _ = fs::write(dep_path, file);
+      }
     }
   }
 }
