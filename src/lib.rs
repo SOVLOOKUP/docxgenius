@@ -103,8 +103,34 @@ impl DocxTemplate {
     Ok(())
   }
 
+  fn _render_byte(&self, template: Vec<i8>, json_data: &str) -> j4rs::errors::Result<Vec<i8>> {
+    let json_data_args = InvocationArg::try_from(json_data)?;
+
+    let args: Vec<InvocationArg> = template
+      .iter()
+      .map(|i| InvocationArg::try_from(i).unwrap())
+      .collect();
+
+    let arr_instance = self.jvm.create_java_array("java.lang.Byte", &args)?;
+
+    let instance = self.jvm.invoke(
+      &self.instance,
+      "run_byte",
+      &[InvocationArg::try_from(arr_instance)?, json_data_args],
+    )?;
+
+    let out: Vec<i8> = self.jvm.to_rust(instance)?;
+
+    Ok(out)
+  }
+
   #[napi]
   pub fn render_file(&self, tpl_path: String, out_path: String, json_data: String) {
     let _ = self._render_file(&tpl_path, &out_path, &json_data);
+  }
+
+  #[napi]
+  pub fn render_byte(&self, template: Vec<i8>, json_data: String) -> Vec<i8> {
+    self._render_byte(template, &json_data).unwrap()
   }
 }
