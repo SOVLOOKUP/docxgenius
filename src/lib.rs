@@ -5,8 +5,10 @@ include!(concat!(env!("OUT_DIR"), "/deps.rs"));
 use std::{env, fs, path::PathBuf};
 
 use j4rs::{
-  Instance, InvocationArg, Jvm, JvmBuilder, MavenArtifact, MavenArtifactRepo, MavenSettings,
+  Instance, InvocationArg, JavaClass, Jvm, JvmBuilder, MavenArtifact, MavenArtifactRepo,
+  MavenSettings,
 };
+use napi::bindgen_prelude::Int8Array;
 use napi_derive::napi;
 use rust_embed::RustEmbed;
 
@@ -67,13 +69,41 @@ impl DocxTemplate {
   }
 
   #[napi]
+  pub fn render_byte(&self, template: Int8Array, json_data: String) -> Int8Array {
+    let array = self
+      .jvm
+      .java_list(JavaClass::Byte, template.to_vec())
+      .unwrap();
+
+    let template_args = InvocationArg::try_from(array).unwrap();
+    let json_data_args = InvocationArg::try_from(json_data).unwrap();
+
+    let out_byte = self
+      .jvm
+      .invoke(
+        &self.instance,
+        "renderByte",
+        &[template_args, json_data_args],
+      )
+      .unwrap();
+
+    let o: Vec<i8> = self.jvm.to_rust(out_byte).unwrap();
+
+    o.into()
+  }
+
+  #[napi]
   pub fn render_base64(&self, template: String, json_data: String) -> String {
     let template_args = InvocationArg::try_from(template).unwrap();
     let json_data_args = InvocationArg::try_from(json_data).unwrap();
 
     let out_byte = self
       .jvm
-      .invoke(&self.instance, "render", &[template_args, json_data_args])
+      .invoke(
+        &self.instance,
+        "renderBase64",
+        &[template_args, json_data_args],
+      )
       .unwrap();
 
     self.jvm.to_rust(out_byte).unwrap()
