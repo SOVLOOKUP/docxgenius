@@ -3,6 +3,9 @@ edition = "2021"
 name = "docxtemplate"
 version = "0.0.0"
 
+[[bin]]
+name = "install_deps"
+
 [lib]
 crate-type = ["cdylib"]
 
@@ -18,3 +21,4 @@ napi-build = "2.0.1"
 
 [profile.release]
 lto = true
+strip = true
