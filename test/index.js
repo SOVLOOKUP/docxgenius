@@ -7,11 +7,11 @@ const template = fs.readFileSync("test/assets/template.docx")
 const dt = new DocxTemplate()
 
 // 1
-// dt.renderFile("test/assets/template.docx", "target/out.docx", data)
+dt.renderFile("test/assets/template.docx", "target/out.docx", data)
 
-// // 2
-// const out = dt.renderBase64(template.toString("base64"), data)
-// fs.writeFileSync("target/out2.docx", Buffer.from(out, "base64"))
+// 2
+const out = dt.renderBase64(template.toString("base64"), data)
+fs.writeFileSync("target/out2.docx", Buffer.from(out, "base64"))
 
 // 3
 const out2 = dt.renderByte(Int8Array.from(template), data)
