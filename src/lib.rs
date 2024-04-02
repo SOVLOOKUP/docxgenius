@@ -42,6 +42,7 @@ impl DocxTemplate {
       .build()
       .unwrap();
     deps(&jvm);
+
     let instance = jvm
       .create_instance("com.github.SOVLOOKUP.docx.template.DocxTemplate", &[])
       .unwrap();
@@ -78,10 +79,16 @@ impl DocxTemplate {
     self.jvm.to_rust(out_byte).unwrap()
   }
 
-  // dump dependencies Jar
+  // dump dependencies Jar todo 合二为一
   fn dump(poitl_path: &PathBuf) {
     let jars_path = poitl_path.join("jassets");
-    let _ = fs::create_dir_all(&jars_path);
+
+    // todo 计算比对 hash
+    if let Ok(true) = fs::try_exists(&jars_path) {
+      fs::remove_dir_all(&jars_path).unwrap();
+    }
+
+    fs::create_dir_all(&jars_path).unwrap();
 
     for item in Jassets::iter() {
       let name = item.to_string();
@@ -97,7 +104,12 @@ impl DocxTemplate {
     #[cfg(feature = "java_callback")]
     {
       let deps_path = poitl_path.join("deps");
-      let _ = fs::create_dir_all(&deps_path);
+
+      if let Ok(true) = fs::try_exists(&deps_path) {
+        fs::remove_dir_all(&deps_path).unwrap();
+      }
+
+      fs::create_dir_all(&deps_path).unwrap();
 
       for item in Deps::iter() {
         let name = item.to_string();

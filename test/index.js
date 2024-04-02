@@ -9,6 +9,6 @@ dt.renderFile("test/assets/template.docx", "target/out.docx", data)
 
 const template = fs.readFileSync("test/assets/template.docx")
 
-// const out = dt.renderBase64(template.toString("base64"), data)
+const out = dt.renderBase64(template.toString("base64"), data)
 
-// fs.writeFileSync("target/out2.docx", Buffer.from(out, "base64"))
+fs.writeFileSync("target/out2.docx", Buffer.from(out, "base64"))
