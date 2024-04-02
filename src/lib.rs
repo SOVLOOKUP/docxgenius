@@ -21,40 +21,6 @@ struct Jassets;
 #[folder = "$CARGO_MANIFEST_DIR/target/debug/deps"]
 struct Deps;
 
-// dump dependencies Jar
-fn dump(poitl_path: &PathBuf) {
-  let jars_path = poitl_path.join("jassets");
-  let _ = fs::create_dir_all(&jars_path);
-
-  for item in Jassets::iter() {
-    let name = item.to_string();
-    let binding = Jassets::get(&name).unwrap();
-    let file = binding.data.as_ref();
-
-    let jar_path = jars_path.join(name);
-    if let Ok(false) = fs::try_exists(&jar_path) {
-      let _ = fs::write(jar_path, file);
-    }
-  }
-
-  #[cfg(feature = "java_callback")]
-  {
-    let deps_path = poitl_path.join("deps");
-    let _ = fs::create_dir_all(&deps_path);
-
-    for item in Deps::iter() {
-      let name = item.to_string();
-      let binding = Deps::get(&name).unwrap();
-      let file = binding.data.as_ref();
-
-      let dep_path = deps_path.join(name);
-      if let Ok(false) = fs::try_exists(&dep_path) {
-        let _ = fs::write(dep_path, file);
-      }
-    }
-  }
-}
-
 #[napi]
 pub struct DocxTemplate {
   jvm: Jvm,
@@ -66,7 +32,7 @@ impl DocxTemplate {
   #[napi(constructor)]
   pub fn new() -> Self {
     let poitl_path = env::temp_dir().join("poitl");
-    dump(&poitl_path);
+    DocxTemplate::dump(&poitl_path);
     let base_path = poitl_path.to_str().unwrap();
     let jvm: Jvm = JvmBuilder::new()
       .with_maven_settings(MavenSettings::new(vec![MavenArtifactRepo::from(
@@ -76,61 +42,73 @@ impl DocxTemplate {
       .build()
       .unwrap();
     deps(&jvm);
-
     let instance = jvm
       .create_instance("com.github.SOVLOOKUP.docx.template.DocxTemplate", &[])
       .unwrap();
 
-    return DocxTemplate { jvm, instance };
-  }
-
-  fn _render_file(
-    &self,
-    tpl_path: &str,
-    out_path: &str,
-    json_data: &str,
-  ) -> j4rs::errors::Result<()> {
-    let tpl_path_args = InvocationArg::try_from(tpl_path)?;
-    let out_path_args = InvocationArg::try_from(out_path)?;
-    let json_data_args = InvocationArg::try_from(json_data)?;
-
-    self.jvm.invoke(
-      &self.instance,
-      "run",
-      &[tpl_path_args, out_path_args, json_data_args],
-    )?;
-
-    Ok(())
-  }
-
-  fn _render_byte(&self, template: Vec<i8>, json_data: &str) -> j4rs::errors::Result<Vec<i8>> {
-    let json_data_args = InvocationArg::try_from(json_data)?;
-
-    let args: Vec<InvocationArg> = template
-      .iter()
-      .map(|i| InvocationArg::try_from(i).unwrap())
-      .collect();
-
-    let arr_instance = self.jvm.create_java_array("java.lang.Byte", &args)?;
-
-    let instance = self.jvm.invoke(
-      &self.instance,
-      "run_byte",
-      &[InvocationArg::try_from(arr_instance)?, json_data_args],
-    )?;
-
-    let out: Vec<i8> = self.jvm.to_rust(instance)?;
-
-    Ok(out)
+    DocxTemplate { jvm, instance }
   }
 
   #[napi]
   pub fn render_file(&self, tpl_path: String, out_path: String, json_data: String) {
-    let _ = self._render_file(&tpl_path, &out_path, &json_data);
+    let tpl_path_args = InvocationArg::try_from(tpl_path).unwrap();
+    let out_path_args = InvocationArg::try_from(out_path).unwrap();
+    let json_data_args = InvocationArg::try_from(json_data).unwrap();
+
+    self
+      .jvm
+      .invoke(
+        &self.instance,
+        "renderFile",
+        &[tpl_path_args, out_path_args, json_data_args],
+      )
+      .unwrap();
   }
 
   #[napi]
-  pub fn render_byte(&self, template: Vec<i8>, json_data: String) -> Vec<i8> {
-    self._render_byte(template, &json_data).unwrap()
+  pub fn render_base64(&self, template: String, json_data: String) -> String {
+    let template_args = InvocationArg::try_from(template).unwrap();
+    let json_data_args = InvocationArg::try_from(json_data).unwrap();
+
+    let out_byte = self
+      .jvm
+      .invoke(&self.instance, "render", &[template_args, json_data_args])
+      .unwrap();
+
+    self.jvm.to_rust(out_byte).unwrap()
+  }
+
+  // dump dependencies Jar
+  fn dump(poitl_path: &PathBuf) {
+    let jars_path = poitl_path.join("jassets");
+    let _ = fs::create_dir_all(&jars_path);
+
+    for item in Jassets::iter() {
+      let name = item.to_string();
+      let binding = Jassets::get(&name).unwrap();
+      let file = binding.data.as_ref();
+
+      let jar_path = jars_path.join(name);
+      if let Ok(false) = fs::try_exists(&jar_path) {
+        let _ = fs::write(jar_path, file);
+      }
+    }
+
+    #[cfg(feature = "java_callback")]
+    {
+      let deps_path = poitl_path.join("deps");
+      let _ = fs::create_dir_all(&deps_path);
+
+      for item in Deps::iter() {
+        let name = item.to_string();
+        let binding = Deps::get(&name).unwrap();
+        let file = binding.data.as_ref();
+
+        let dep_path = deps_path.join(name);
+        if let Ok(false) = fs::try_exists(&dep_path) {
+          let _ = fs::write(dep_path, file);
+        }
+      }
+    }
   }
 }
