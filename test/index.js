@@ -14,5 +14,6 @@ const out = dt.renderBase64(template.toString("base64"), data)
 fs.writeFileSync("target/out2.docx", Buffer.from(out, "base64"))
 
 // 3
-const out2 = dt.renderByte(Int8Array.from(template), data)
-fs.writeFileSync("target/out3.docx", Buffer.from(out2))
+const out2 = dt.templateMeta(template.toString("base64"))
+
+console.log(out2)

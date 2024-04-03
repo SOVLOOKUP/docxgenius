@@ -5,12 +5,11 @@ include!(concat!(env!("OUT_DIR"), "/deps.rs"));
 use std::{env, fs, path::PathBuf};
 
 use j4rs::{
-  Instance, InvocationArg, JavaClass, Jvm, JvmBuilder, MavenArtifact, MavenArtifactRepo,
-  MavenSettings,
+  Instance, InvocationArg, Jvm, JvmBuilder, MavenArtifact, MavenArtifactRepo, MavenSettings,
 };
-use napi::bindgen_prelude::Int8Array;
 use napi_derive::napi;
 use rust_embed::RustEmbed;
+use walkdir::WalkDir;
 
 // Dependencies Jar
 #[derive(RustEmbed)]
@@ -29,12 +28,60 @@ pub struct DocxTemplate {
   instance: Instance,
 }
 
+// dump dependencies
+fn dump(poitl_path: &PathBuf) {
+  let jars_path = poitl_path.join("jassets");
+  dump_assets::<Jassets>(&jars_path);
+
+  #[cfg(feature = "java_callback")]
+  {
+    let deps_path = poitl_path.join("deps");
+    dump_assets::<Deps>(&deps_path);
+  }
+}
+
+fn dump_assets<T: RustEmbed>(path: &PathBuf) {
+  fs::create_dir_all(path).unwrap();
+
+  let path_iter: Vec<String> = WalkDir::new(path)
+    .into_iter()
+    .map(|i| i.unwrap().file_name().to_string_lossy().into_owned())
+    .collect();
+
+  for item in T::iter() {
+    let name = item.to_string();
+
+    // 删除过时依赖
+    let rev_name = name.chars().rev().collect::<String>();
+    let (_, target) = rev_name.split_once("-").unwrap();
+    let pkg = target.chars().rev().collect::<String>();
+    let pkg_ = pkg.clone() + "-";
+    let _ = path_iter
+      .clone()
+      .into_iter()
+      .filter(|entry| !(entry.eq(&name)))
+      .filter(|entry| entry.starts_with(&pkg))
+      .filter(|entry| !entry.replace(&pkg_, "").contains("-"))
+      .map(|entry| fs::remove_file(path.join(&entry)).unwrap())
+      .collect::<Vec<()>>();
+
+    // dump 依赖
+    let binding = T::get(&name).unwrap();
+    let file = binding.data.as_ref();
+
+    let file_path = path.join(name);
+    if let Ok(false) = fs::try_exists(&file_path) {
+      let _ = fs::write(&file_path, file);
+    }
+  }
+}
+
 #[napi]
 impl DocxTemplate {
   #[napi(constructor)]
   pub fn new() -> Self {
     let poitl_path = env::temp_dir().join("poitl");
-    DocxTemplate::dump(&poitl_path);
+    dump(&poitl_path);
     let base_path = poitl_path.to_str().unwrap();
     let jvm: Jvm = JvmBuilder::new()
       .with_maven_settings(MavenSettings::new(vec![MavenArtifactRepo::from(
@@ -69,30 +116,6 @@ impl DocxTemplate {
   }
 
   #[napi]
-  pub fn render_byte(&self, template: Int8Array, json_data: String) -> Int8Array {
-    let array = self
-      .jvm
-      .java_list(JavaClass::Byte, template.to_vec())
-      .unwrap();
-
-    let template_args = InvocationArg::try_from(array).unwrap();
-    let json_data_args = InvocationArg::try_from(json_data).unwrap();
-
-    let out_byte = self
-      .jvm
-      .invoke(
-        &self.instance,
-        "renderByte",
-        &[template_args, json_data_args],
-      )
-      .unwrap();
-
-    let o: Vec<i8> = self.jvm.to_rust(out_byte).unwrap();
-
-    o.into()
-  }
-
-  #[napi]
   pub fn render_base64(&self, template: String, json_data: String) -> String {
     let template_args = InvocationArg::try_from(template).unwrap();
     let json_data_args = InvocationArg::try_from(json_data).unwrap();
@@ -109,48 +132,15 @@ impl DocxTemplate {
     self.jvm.to_rust(out_byte).unwrap()
   }
 
-  // dump dependencies Jar todo 合二为一
-  fn dump(poitl_path: &PathBuf) {
-    let jars_path = poitl_path.join("jassets");
+  #[napi]
+  pub fn template_meta(&self, template: String) -> Vec<String> {
+    let template_args = InvocationArg::try_from(template).unwrap();
 
-    // todo 计算比对 hash
-    if let Ok(true) = fs::try_exists(&jars_path) {
-      fs::remove_dir_all(&jars_path).unwrap();
-    }
+    let out_byte = self
+      .jvm
+      .invoke(&self.instance, "templateMeta", &[template_args])
+      .unwrap();
 
-    fs::create_dir_all(&jars_path).unwrap();
-
-    for item in Jassets::iter() {
-      let name = item.to_string();
-      let binding = Jassets::get(&name).unwrap();
-      let file = binding.data.as_ref();
-
-      let jar_path = jars_path.join(name);
-      if let Ok(false) = fs::try_exists(&jar_path) {
-        let _ = fs::write(jar_path, file);
-      }
-    }
-
-    #[cfg(feature = "java_callback")]
-    {
-      let deps_path = poitl_path.join("deps");
-
-      if let Ok(true) = fs::try_exists(&deps_path) {
-        fs::remove_dir_all(&deps_path).unwrap();
-      }
-
-      fs::create_dir_all(&deps_path).unwrap();
-
-      for item in Deps::iter() {
-        let name = item.to_string();
-        let binding = Deps::get(&name).unwrap();
-        let file = binding.data.as_ref();
-
-        let dep_path = deps_path.join(name);
-        if let Ok(false) = fs::try_exists(&dep_path) {
-          let _ = fs::write(dep_path, file);
-        }
-      }
-    }
+    self.jvm.to_rust(out_byte).unwrap()
   }
 }
