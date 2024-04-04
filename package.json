@@ -22,7 +22,7 @@
   },
   "scripts": {
     "artifacts": "napi artifacts",
-    "build": "cargo run --bin install_deps && napi build --platform --release",
+    "build": "cargo run --release --bin install_deps && napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
     "universal": "napi universal",

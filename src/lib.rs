@@ -13,13 +13,13 @@ use walkdir::WalkDir;
 
 // Dependencies Jar
 #[derive(RustEmbed)]
-#[folder = "$CARGO_MANIFEST_DIR/target/debug/jassets"]
+#[folder = "$CARGO_MANIFEST_DIR/target/release/jassets"]
 struct Jassets;
 
 // Dependencies deps
 #[cfg(feature = "java_callback")]
 #[derive(RustEmbed)]
-#[folder = "$CARGO_MANIFEST_DIR/target/debug/deps"]
+#[folder = "$CARGO_MANIFEST_DIR/target/release/deps"]
 struct Deps;
 
 #[napi]
