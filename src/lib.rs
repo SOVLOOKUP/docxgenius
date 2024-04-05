@@ -1,4 +1,5 @@
-pub mod deps;
+#![feature(fs_try_exists)]
+mod deps;
 
 use std::{env, fs, path::PathBuf};
 
