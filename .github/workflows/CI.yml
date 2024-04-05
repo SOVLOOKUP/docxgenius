@@ -93,8 +93,15 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - run: mvn dependency:list && whereis mvn
         if: matrix.settings.host == 'ubuntu-latest'
       - name: Setup node
@@ -175,8 +182,15 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -207,8 +221,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -239,8 +260,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -273,8 +301,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
@@ -309,8 +344,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
@@ -350,8 +392,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Maven Action
-        uses: s4u/setup-maven-action@main
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: s4u/maven-settings-action@v3.0.0
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
