@@ -21,7 +21,7 @@ fn main() {
 
   let ls_la_list = String::from_utf8(output.stdout).unwrap();
 
-  println!("{}", ls_la_list);
+  println!("mvn output: {}", ls_la_list);
 
   let binding = ls_la_list
     .replace("[INFO]    ", "")
