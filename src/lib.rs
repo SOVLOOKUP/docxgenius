@@ -1,10 +1,9 @@
 mod deps;
 
-use std::{env, fs, path::PathBuf};
-
 use j4rs::{Instance, InvocationArg, Jvm, JvmBuilder, MavenArtifactRepo, MavenSettings};
 use napi_derive::napi;
 use rust_embed::RustEmbed;
+use std::{env, fs, path::PathBuf};
 use walkdir::WalkDir;
 
 // Dependencies Jar
@@ -67,9 +66,7 @@ fn dump_assets<T: RustEmbed>(path: &PathBuf) {
     // dump 依赖
     let binding = T::get(&name).unwrap();
     let file = binding.data.as_ref();
-
     let file_path = path.join(name);
-
     if !file_path.exists() {
       let _ = fs::write(&file_path, file);
     }
