@@ -1,0 +1,18 @@
+{
+  "name": "docxtemplate-linux-arm-gnueabihf",
+  "version": "0.0.0",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "arm"
+  ],
+  "main": "docxtemplate.linux-arm-gnueabihf.node",
+  "files": [
+    "docxtemplate.linux-arm-gnueabihf.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}
