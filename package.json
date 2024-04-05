@@ -31,6 +31,7 @@
     "node": ">= 10"
   },
   "scripts": {
+    "mvn": "cargo run --bin gen_deps",
     "artifacts": "napi artifacts",
     "build": "cargo run --release --bin install_deps && napi build --platform --release",
     "build:debug": "napi build --platform",

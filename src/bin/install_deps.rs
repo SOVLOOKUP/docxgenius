@@ -1,5 +1,5 @@
-use j4rs::{Jvm, JvmBuilder, MavenArtifact, MavenArtifactRepo, MavenSettings};
-include!(concat!(env!("OUT_DIR"), "/deps.rs"));
+use docxtemplate::deps::deps;
+use j4rs::{Jvm, JvmBuilder, MavenArtifactRepo, MavenSettings};
 
 fn main() {
   let jvm: Jvm = JvmBuilder::new()
@@ -8,5 +8,6 @@ fn main() {
     )]))
     .build()
     .unwrap();
+
   deps(&jvm);
 }

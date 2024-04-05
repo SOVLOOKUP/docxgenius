@@ -1,12 +1,8 @@
-#![deny(clippy::all)]
-#![feature(fs_try_exists)]
-// auto import deps
-include!(concat!(env!("OUT_DIR"), "/deps.rs"));
+pub mod deps;
+
 use std::{env, fs, path::PathBuf};
 
-use j4rs::{
-  Instance, InvocationArg, Jvm, JvmBuilder, MavenArtifact, MavenArtifactRepo, MavenSettings,
-};
+use j4rs::{Instance, InvocationArg, Jvm, JvmBuilder, MavenArtifactRepo, MavenSettings};
 use napi_derive::napi;
 use rust_embed::RustEmbed;
 use walkdir::WalkDir;
@@ -90,7 +86,7 @@ impl DocxTemplate {
       .with_base_path(base_path)
       .build()
       .unwrap();
-    deps(&jvm);
+    deps::deps(&jvm);
 
     let instance = jvm
       .create_instance("com.github.SOVLOOKUP.docx.template.DocxTemplate", &[])
