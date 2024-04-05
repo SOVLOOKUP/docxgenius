@@ -4,16 +4,18 @@ use std::process::Command;
 
 fn main() {
   // java deps
-  let mut mvn: String = "mvn".to_string();
-
-  if cfg!(target_os = "windows") {
-    mvn += ".cmd";
-  }
-
-  let output = Command::new(mvn)
-    .arg("dependency:list")
-    .output()
-    .expect("命令执行异常错误提示");
+  let output = if cfg!(target_os = "windows") {
+    Command::new("mvn.cmd")
+      .arg("dependency:list")
+      .output()
+      .expect("命令执行异常错误提示")
+  } else {
+    Command::new("sh")
+      .arg("-c")
+      .arg("mvn dependency:list")
+      .output()
+      .unwrap()
+  };
 
   let ls_la_list = String::from_utf8(output.stdout).unwrap();
 
