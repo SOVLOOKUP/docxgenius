@@ -28,8 +28,6 @@ pub fn deps(jvm: &Jvm) {
   jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("com.github.virtuald:curvesapi:1.07");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
-  let dbx_artifact = MavenArtifact::from("org.apache.logging.log4j:log4j-api:2.17.2");
-  jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("org.apache.commons:commons-collections4:4.4");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("org.apache.xmlgraphics:batik-transcoder:1.17");
@@ -95,5 +93,9 @@ pub fn deps(jvm: &Jvm) {
   let dbx_artifact = MavenArtifact::from("javax.annotation:jsr250-api:1.0");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("net.jodah:typetools:0.6.3");
+  jvm.deploy_artifact(&dbx_artifact).unwrap();
+  let dbx_artifact = MavenArtifact::from("org.apache.logging.log4j:log4j-core:2.23.1");
+  jvm.deploy_artifact(&dbx_artifact).unwrap();
+  let dbx_artifact = MavenArtifact::from("org.apache.logging.log4j:log4j-api:2.23.1");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
 }

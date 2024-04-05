@@ -1,5 +1,11 @@
 mod deps;
 use j4rs::{Jvm, JvmBuilder, MavenArtifactRepo, MavenSettings};
+use std::{
+  fs::{remove_dir_all, remove_file},
+  path,
+};
+
+const JAVA_DEPS_HOME: &str = "java";
 
 fn main() {
   let jvm: Jvm = JvmBuilder::new()
@@ -11,5 +17,9 @@ fn main() {
 
   deps::deps(&jvm);
 
-  let _ = Jvm::copy_j4rs_libs_under("java");
+  let _ = remove_dir_all(JAVA_DEPS_HOME);
+  let _ = Jvm::copy_j4rs_libs_under(JAVA_DEPS_HOME);
+
+  // fix log4j
+  remove_file(path::PathBuf::from(JAVA_DEPS_HOME).join("jassets/log4j-api-2.17.2.jar")).unwrap();
 }
