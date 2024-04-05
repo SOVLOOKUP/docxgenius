@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { DocxTemplate } from '../index'
+import { DocxTemplate } from '..'
 import fs from "fs"
 
 const data = fs.readFileSync("test/assets/data.json", "utf-8")
