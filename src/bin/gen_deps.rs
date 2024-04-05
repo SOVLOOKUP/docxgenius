@@ -8,15 +8,24 @@ fn main() {
     Command::new("mvn.cmd")
       .arg("dependency:list")
       .output()
-      .expect("命令执行异常错误提示")
+      .unwrap()
+  } else if cfg!(target_os = "macos") {
+    Command::new("sh")
+      .arg("-c")
+      .arg("mvn dependency:list")
+      .output()
+      .unwrap()
   } else {
-    Command::new("/usr/bin/mvn")
-      .arg("dependency:list")
+    Command::new("sh")
+      .arg("-c")
+      .arg("mvn dependency:list")
       .output()
       .unwrap()
   };
 
   let ls_la_list = String::from_utf8(output.stdout).unwrap();
+
+  println!("{}", ls_la_list);
 
   let binding = ls_la_list
     .replace("[INFO]    ", "")
