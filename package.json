@@ -31,9 +31,9 @@
     "node": ">= 10"
   },
   "scripts": {
-    "mvn": "cargo run --bin gen_deps",
+    "mvn": "cargo run --bin gen_deps && cargo run --bin docxtemplate",
     "artifacts": "napi artifacts",
-    "build": "cargo run --release --bin docxtemplate && napi build --platform --release",
+    "build": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
     "universal": "napi universal",

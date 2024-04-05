@@ -10,4 +10,6 @@ fn main() {
     .unwrap();
 
   deps::deps(&jvm);
+
+  let _ = Jvm::copy_j4rs_libs_under("java");
 }

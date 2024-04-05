@@ -10,13 +10,12 @@ use walkdir::WalkDir;
 
 // Dependencies Jar
 #[derive(RustEmbed)]
-#[folder = "$CARGO_MANIFEST_DIR/target/release/jassets"]
+#[folder = "$CARGO_MANIFEST_DIR/java/jassets"]
 struct Jassets;
 
 // Dependencies deps
-#[cfg(feature = "java_callback")]
 #[derive(RustEmbed)]
-#[folder = "$CARGO_MANIFEST_DIR/target/release/deps"]
+#[folder = "$CARGO_MANIFEST_DIR/java/deps"]
 struct Deps;
 
 #[napi]
@@ -30,11 +29,8 @@ fn dump(poitl_path: &PathBuf) {
   let jars_path = poitl_path.join("jassets");
   dump_assets::<Jassets>(&jars_path);
 
-  #[cfg(feature = "java_callback")]
-  {
-    let deps_path = poitl_path.join("deps");
-    dump_assets::<Deps>(&deps_path);
-  }
+  let deps_path = poitl_path.join("deps");
+  dump_assets::<Deps>(&deps_path);
 }
 
 fn dump_assets<T: RustEmbed>(path: &PathBuf) {
@@ -49,15 +45,22 @@ fn dump_assets<T: RustEmbed>(path: &PathBuf) {
     let name = item.to_string();
 
     // 删除过时依赖
+    // 拓展名
     let rev_name = name.chars().rev().collect::<String>();
+    let (target, _) = rev_name.split_once(".").unwrap();
+    let ext = target.chars().rev().collect::<String>();
+
+    // 依赖名称
     let (_, target) = rev_name.split_once("-").unwrap();
     let pkg = target.chars().rev().collect::<String>();
+
     let pkg_ = pkg.clone() + "-";
     let _ = path_iter
       .clone()
       .into_iter()
-      .filter(|entry| !(entry.eq(&name)))
       .filter(|entry| entry.starts_with(&pkg))
+      .filter(|entry| entry.ends_with(&ext))
+      .filter(|entry| !(entry.eq(&name)))
       .filter(|entry| !entry.replace(&pkg_, "").contains("-"))
       .map(|entry| fs::remove_file(path.join(&entry)).unwrap())
       .collect::<Vec<()>>();
