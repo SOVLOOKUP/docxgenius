@@ -17,7 +17,7 @@ struct Jassets;
 struct Deps;
 
 #[napi]
-pub struct DocxTemplate {
+pub struct DocxGenius {
   jvm: Jvm,
   instance: Instance,
 }
@@ -74,7 +74,7 @@ fn dump_assets<T: RustEmbed>(path: &PathBuf) {
 }
 
 #[napi]
-impl DocxTemplate {
+impl DocxGenius {
   #[napi(constructor)]
   pub fn new() -> Self {
     let poitl_path = env::temp_dir().join("poitl");
@@ -93,7 +93,7 @@ impl DocxTemplate {
       .create_instance("com.github.SOVLOOKUP.docx.template.DocxTemplate", &[])
       .unwrap();
 
-    DocxTemplate { jvm, instance }
+    DocxGenius { jvm, instance }
   }
 
   #[napi]

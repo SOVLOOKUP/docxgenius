@@ -1,8 +1,8 @@
 {
-  "name": "docxtemplate-android-arm-eabi",
+  "name": "docxgenius-android-arm-eabi",
   "version": "0.0.0",
   "repository": {
-    "url": "https://github.com/SOVLOOKUP/docxtemplate"
+    "url": "https://github.com/SOVLOOKUP/docxgenius"
   },
   "os": [
     "android"
@@ -10,9 +10,9 @@
   "cpu": [
     "arm"
   ],
-  "main": "docxtemplate.android-arm-eabi.node",
+  "main": "docxgenius.android-arm-eabi.node",
   "files": [
-    "docxtemplate.android-arm-eabi.node"
+    "docxgenius.android-arm-eabi.node"
   ],
   "license": "MIT",
   "engines": {

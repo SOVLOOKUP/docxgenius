@@ -1,3 +1,3 @@
-# `docxtemplate-android-arm64`
+# `docxgenius-android-arm64`
 
-This is the **aarch64-linux-android** binary for `docxtemplate`
+This is the **aarch64-linux-android** binary for `docxgenius`

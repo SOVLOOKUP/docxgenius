@@ -1,3 +1,3 @@
-# `docxtemplate-android-arm-eabi`
+# `docxgenius-android-arm-eabi`
 
-This is the **armv7-linux-androideabi** binary for `docxtemplate`
+This is the **armv7-linux-androideabi** binary for `docxgenius`

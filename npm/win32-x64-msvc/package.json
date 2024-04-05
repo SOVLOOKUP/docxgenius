@@ -1,8 +1,8 @@
 {
-  "name": "docxtemplate-win32-x64-msvc",
+  "name": "docxgenius-win32-x64-msvc",
   "version": "0.0.0",
   "repository": {
-    "url": "https://github.com/SOVLOOKUP/docxtemplate"
+    "url": "https://github.com/SOVLOOKUP/docxgenius"
   },
   "os": [
     "win32"
@@ -10,9 +10,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "docxtemplate.win32-x64-msvc.node",
+  "main": "docxgenius.win32-x64-msvc.node",
   "files": [
-    "docxtemplate.win32-x64-msvc.node"
+    "docxgenius.win32-x64-msvc.node"
   ],
   "license": "MIT",
   "engines": {

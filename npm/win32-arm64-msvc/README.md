@@ -1,3 +1,3 @@
-# `docxtemplate-win32-arm64-msvc`
+# `docxgenius-win32-arm64-msvc`
 
-This is the **aarch64-pc-windows-msvc** binary for `docxtemplate`
+This is the **aarch64-pc-windows-msvc** binary for `docxgenius`

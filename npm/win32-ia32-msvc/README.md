@@ -1,3 +1,3 @@
-# `docxtemplate-win32-ia32-msvc`
+# `docxgenius-win32-ia32-msvc`
 
-This is the **i686-pc-windows-msvc** binary for `docxtemplate`
+This is the **i686-pc-windows-msvc** binary for `docxgenius`

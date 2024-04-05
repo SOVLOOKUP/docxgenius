@@ -1,10 +1,10 @@
-const { DocxTemplate } = require("..")
+const { DocxGenius } = require("..")
 const assert = require("assert")
 const fs = require("fs")
 
 const data = fs.readFileSync("test/assets/data.json", "utf-8")
 const template = fs.readFileSync("test/assets/template.docx")
-const dt = new DocxTemplate()
+const dt = new DocxGenius()
 
 if (!fs.existsSync("target")) {
     fs.mkdirSync("target")

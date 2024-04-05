@@ -1,8 +1,8 @@
 {
-  "name": "docxtemplate-android-arm64",
+  "name": "docxgenius-android-arm64",
   "version": "0.0.0",
   "repository": {
-    "url": "https://github.com/SOVLOOKUP/docxtemplate"
+    "url": "https://github.com/SOVLOOKUP/docxgenius"
   },
   "os": [
     "android"
@@ -10,9 +10,9 @@
   "cpu": [
     "arm64"
   ],
-  "main": "docxtemplate.android-arm64.node",
+  "main": "docxgenius.android-arm64.node",
   "files": [
-    "docxtemplate.android-arm64.node"
+    "docxgenius.android-arm64.node"
   ],
   "license": "MIT",
   "engines": {

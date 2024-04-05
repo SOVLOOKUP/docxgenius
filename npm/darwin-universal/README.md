@@ -1,3 +1,3 @@
-# `docxtemplate-darwin-universal`
+# `docxgenius-darwin-universal`
 
-This is the **universal-apple-darwin** binary for `docxtemplate`
+This is the **universal-apple-darwin** binary for `docxgenius`

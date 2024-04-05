@@ -1,15 +1,15 @@
-# docxtemplate
+# docxgenius
 
 A [poi-tl](https://github.com/Sayi/poi-tl)-based docx generator
 
 基于 [poi-tl](https://github.com/Sayi/poi-tl) 的 docx 模板生成器
 
 ```
-pnpm add docxtemplate
+pnpm add docxgenius
 ```
 
 ```ts
-export class DocxTemplate {
+export class DocxGenius {
   constructor()
   // 从模板文件渲染  Render docx from a template file  
   renderFile(tplPath: string, outPath: string, jsonData: string): void

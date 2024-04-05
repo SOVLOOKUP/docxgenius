@@ -1,8 +1,8 @@
 {
-  "name": "docxtemplate-linux-x64-gnu",
+  "name": "docxgenius-linux-x64-gnu",
   "version": "0.0.0",
   "repository": {
-    "url": "https://github.com/SOVLOOKUP/docxtemplate"
+    "url": "https://github.com/SOVLOOKUP/docxgenius"
   },
   "os": [
     "linux"
@@ -10,9 +10,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "docxtemplate.linux-x64-gnu.node",
+  "main": "docxgenius.linux-x64-gnu.node",
   "files": [
-    "docxtemplate.linux-x64-gnu.node"
+    "docxgenius.linux-x64-gnu.node"
   ],
   "license": "MIT",
   "engines": {

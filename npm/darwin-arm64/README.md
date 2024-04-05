@@ -1,3 +1,3 @@
-# `docxtemplate-darwin-arm64`
+# `docxgenius-darwin-arm64`
 
-This is the **aarch64-apple-darwin** binary for `docxtemplate`
+This is the **aarch64-apple-darwin** binary for `docxgenius`

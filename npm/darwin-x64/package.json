@@ -1,8 +1,8 @@
 {
-  "name": "docxtemplate-darwin-x64",
+  "name": "docxgenius-darwin-x64",
   "version": "0.0.0",
   "repository": {
-    "url": "https://github.com/SOVLOOKUP/docxtemplate"
+    "url": "https://github.com/SOVLOOKUP/docxgenius"
   },
   "os": [
     "darwin"
@@ -10,9 +10,9 @@
   "cpu": [
     "x64"
   ],
-  "main": "docxtemplate.darwin-x64.node",
+  "main": "docxgenius.darwin-x64.node",
   "files": [
-    "docxtemplate.darwin-x64.node"
+    "docxgenius.darwin-x64.node"
   ],
   "license": "MIT",
   "engines": {

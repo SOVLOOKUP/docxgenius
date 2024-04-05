@@ -1,3 +1,3 @@
-# `docxtemplate-linux-arm-gnueabihf`
+# `docxgenius-linux-arm-gnueabihf`
 
-This is the **armv7-unknown-linux-gnueabihf** binary for `docxtemplate`
+This is the **armv7-unknown-linux-gnueabihf** binary for `docxgenius`
