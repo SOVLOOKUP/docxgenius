@@ -10,9 +10,8 @@ fn main() {
       .output()
       .expect("命令执行异常错误提示")
   } else {
-    Command::new("sh")
-      .arg("-c")
-      .arg("mvn dependency:list")
+    Command::new("/usr/bin/mvn")
+      .arg("dependency:list")
       .output()
       .unwrap()
   };
