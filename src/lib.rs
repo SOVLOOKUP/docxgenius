@@ -1,4 +1,3 @@
-#![feature(fs_try_exists)]
 mod deps;
 
 use std::{env, fs, path::PathBuf};
@@ -70,7 +69,8 @@ fn dump_assets<T: RustEmbed>(path: &PathBuf) {
     let file = binding.data.as_ref();
 
     let file_path = path.join(name);
-    if let Ok(false) = fs::try_exists(&file_path) {
+
+    if !file_path.exists() {
       let _ = fs::write(&file_path, file);
     }
   }
