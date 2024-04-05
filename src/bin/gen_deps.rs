@@ -10,11 +10,7 @@ fn main() {
       .output()
       .unwrap()
   } else if cfg!(target_os = "macos") {
-    Command::new("sh")
-      .arg("-c")
-      .arg("mvn dependency:list")
-      .output()
-      .unwrap()
+    Command::new("mvn").arg("dependency:list").output().unwrap()
   } else {
     Command::new("sh")
       .arg("-c")
