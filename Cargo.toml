@@ -10,7 +10,6 @@ name = "gen_deps"
 crate-type = ["cdylib"]
 
 [dependencies]
-# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
 napi = { version = "2.12.2", features = ["napi4", "async"] }
 napi-derive = "2.12.2"
 j4rs = "0.17.2"
