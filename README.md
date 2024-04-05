@@ -1,6 +1,6 @@
 # docxtemplate
 
-[poi-tl](https://github.com/Sayi/poi-tl)-based docx template generator
+A [poi-tl](https://github.com/Sayi/poi-tl)-based docx generator
 
 基于 [poi-tl](https://github.com/Sayi/poi-tl) 的 docx 模板生成器
 
@@ -11,11 +11,11 @@ pnpm add docxtemplate
 ```ts
 export class DocxTemplate {
   constructor()
-  // 从模板文件渲染  
+  // 从模板文件渲染  Render docx from a template file  
   renderFile(tplPath: string, outPath: string, jsonData: string): void
-  // 从 base64 渲染  
+  // 从 base64 渲染  Render docx from base64 string
   renderBase64(template: string, jsonData: string): string
-  // 获取模板文件中的变量  
+  // 获取模板文件中的变量  Get the variables from the template file  
   templateMeta(template: string): Array<string>
 }
 ```
