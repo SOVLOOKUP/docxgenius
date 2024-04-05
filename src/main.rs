@@ -1,9 +1,6 @@
 mod deps;
 use j4rs::{Jvm, JvmBuilder, MavenArtifactRepo, MavenSettings};
-use std::{
-  fs::{remove_dir_all, remove_file},
-  path,
-};
+use std::fs::remove_dir_all;
 
 const JAVA_DEPS_HOME: &str = "java";
 
