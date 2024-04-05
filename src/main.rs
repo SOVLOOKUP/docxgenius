@@ -22,4 +22,5 @@ fn main() {
 
   // fix log4j todo 只保留最高版本
   remove_file(path::PathBuf::from(JAVA_DEPS_HOME).join("jassets/log4j-api-2.17.2.jar")).unwrap();
+  remove_file(path::PathBuf::from(JAVA_DEPS_HOME).join("jassets/slf4j-api-1.7.32.jar")).unwrap();
 }

@@ -6,6 +6,10 @@ const data = fs.readFileSync("test/assets/data.json", "utf-8")
 const template = fs.readFileSync("test/assets/template.docx")
 const dt = new DocxTemplate()
 
+if (!fs.existsSync("target")) {
+    fs.mkdirSync("target")
+}
+
 it('Render Docx File', () => {
     dt.renderFile("test/assets/template.docx", "target/out.docx", data)
     assert.strictEqual(fs.existsSync("target/out.docx"), true)

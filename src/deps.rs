@@ -4,8 +4,6 @@ pub fn deps(jvm: &Jvm) {
   jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("com.deepoove:poi-tl:1.12.2");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
-  let dbx_artifact = MavenArtifact::from("org.slf4j:slf4j-api:1.7.32");
-  jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("org.apache.commons:commons-lang3:3.3.2");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("org.apache.poi:poi-ooxml:5.2.2");
@@ -97,5 +95,9 @@ pub fn deps(jvm: &Jvm) {
   let dbx_artifact = MavenArtifact::from("org.apache.logging.log4j:log4j-core:2.23.1");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
   let dbx_artifact = MavenArtifact::from("org.apache.logging.log4j:log4j-api:2.23.1");
+  jvm.deploy_artifact(&dbx_artifact).unwrap();
+  let dbx_artifact = MavenArtifact::from("org.slf4j:slf4j-simple:2.0.12");
+  jvm.deploy_artifact(&dbx_artifact).unwrap();
+  let dbx_artifact = MavenArtifact::from("org.slf4j:slf4j-api:2.0.12");
   jvm.deploy_artifact(&dbx_artifact).unwrap();
 }
