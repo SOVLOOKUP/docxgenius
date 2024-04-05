@@ -96,7 +96,7 @@ jobs:
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@main
       - run: env
-        if: matrix.settings.host == ubuntu-latest 
+        if: matrix.settings.host == 'ubuntu-latest'
       - name: Setup node
         uses: actions/setup-node@v4
         if: ${{ !matrix.settings.docker }}
