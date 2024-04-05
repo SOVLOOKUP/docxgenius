@@ -1,6 +1,9 @@
 {
   "name": "docxtemplate-linux-x64-gnu",
   "version": "0.0.0",
+  "repository": {
+    "url": "https://github.com/SOVLOOKUP/docxtemplate"
+  },
   "os": [
     "linux"
   ],
