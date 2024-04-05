@@ -39,5 +39,10 @@
     "universal": "napi universal",
     "version": "napi version",
     "test": "vitest --run"
-  }
+  },
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "README.md"
+  ]
 }
